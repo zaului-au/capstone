@@ -1,129 +1,96 @@
-import React from 'react';
-import { DollarSign, Calendar, Users, Package } from 'lucide-react';
+import React from "react";
+import { DollarSign, Calendar, Users, Package } from "lucide-react";
 
 export default function BudgetDashboard() {
   const materials = [
-    { item: 'Component Procurement', cost: 300 },
-    { item: 'Network Hardware', cost: 120 },
-    { item: 'PCB Fabrication (×2)', cost: 70 },
-    { item: '3D Printed Case', cost: 15 },
-    { item: 'Connectors & Parts', cost: 15 }
+    { item: "Component Procurement", cost: 300 },
+    { item: "Network Hardware", cost: 120 },
+    { item: "PCB Fabrication (×2)", cost: 70 },
+    { item: "3D Printed Case", cost: 15 },
+    { item: "Connectors & Parts", cost: 15 },
   ];
 
   const timeline = [
-    { month: 'Nov 2025', amount: 380 },
-    { month: 'Dec 2025', amount: 45 },
-    { month: 'Jan 2026', amount: 200 },
-    { month: 'Feb 2026', amount: 45 }
+    { month: "Nov 2025", amount: 380 },
+    { month: "Dec 2025", amount: 45 },
+    { month: "Jan 2026", amount: 200 },
+    { month: "Feb 2026", amount: 45 },
   ];
 
   const phases = [
-    { name: 'Problem Analysis', days: 42, color: 'bg-amber-700' },
-    { name: 'Design & Research', days: 28, color: 'bg-amber-800' },
-    { name: 'Build & Assembly', days: 23, color: 'bg-yellow-800' },
-    { name: 'Testing', days: 35, color: 'bg-amber-900' },
-    { name: 'Field Test & Docs', days: 13, color: 'bg-yellow-900' }
+    { name: "Problem Analysis", days: 42, color: "#b45309" },
+    { name: "Design & Research", days: 28, color: "#92400e" },
+    { name: "Build & Assembly", days: 23, color: "#78350f" },
+    { name: "Testing", days: 35, color: "#451a03" },
+    { name: "Field Test & Docs", days: 13, color: "#854d0e" },
   ];
 
-  const teamMembers = ['Estefan', 'Isaac', 'Nathan', 'Nikita', 'Eduardo', 'Drew'];
+  const teamMembers = ["Estefan", "Isaac", "Nathan", "Nikita", "Eduardo", "Drew"];
 
   return (
-    <div className="w-full h-full bg-gradient-to-br from-neutral-900 via-stone-900 to-neutral-800 p-8 text-white">
+    <div style={styles.container}>
       {/* Header */}
-      <div className="text-center mb-6">
-        <h1 className="text-4xl font-bold mb-2 text-amber-100">Miniaturized Tracking Technology</h1>
-        <p className="text-lg text-neutral-300">Engineering Department | Dr. Porter</p>
+      <div style={styles.header}>
+        <h1 style={styles.title}>Miniaturized Tracking Technology</h1>
+        <p style={styles.subtitle}>Engineering Department | Dr. Porter</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      {/* Main Grid */}
+      <div style={styles.grid}>
         {/* Budget Overview */}
-        <div className="col-span-1 bg-stone-800/80 rounded-lg p-5 border border-amber-900/40">
-          <div className="flex items-center gap-2 mb-4">
-            <DollarSign className="w-6 h-6 text-amber-600" />
-            <h2 className="text-xl font-bold text-amber-200">Total Budget</h2>
+        <div style={styles.card}>
+          <div style={styles.cardHeader}>
+            <DollarSign size={20} color="#fbbf24" />
+            <h2 style={styles.sectionTitle}>Total Budget</h2>
           </div>
-          <div className="text-5xl font-bold text-amber-500 mb-4">$520</div>
-          <div className="space-y-2">
-            {materials.map((item, idx) => (
-              <div key={idx} className="flex justify-between text-sm">
-                <span className="text-neutral-300">{item.item}</span>
-                <span className="font-semibold text-amber-400">${item.cost}</span>
-              </div>
-            ))}
-          </div>
+          <div style={styles.bigNumber}>$520</div>
+          {materials.map((item, idx) => (
+            <div key={idx} style={styles.row}>
+              <span>{item.item}</span>
+              <span style={styles.highlight}>${item.cost}</span>
+            </div>
+          ))}
         </div>
 
-        {/* Timeline */}
-        <div className="col-span-1 bg-stone-800/80 rounded-lg p-5 border border-amber-900/40">
-          <div className="flex items-center gap-2 mb-4">
-            <Calendar className="w-6 h-6 text-amber-600" />
-            <h2 className="text-xl font-bold text-amber-200">Spending Timeline</h2>
+        {/* Spending Timeline */}
+        <div style={styles.card}>
+          <div style={styles.cardHeader}>
+            <Calendar size={20} color="#fbbf24" />
+            <h2 style={styles.sectionTitle}>Spending Timeline</h2>
           </div>
-          <div className="space-y-3">
-            {timeline.map((item, idx) => (
-              <div key={idx}>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm font-medium text-neutral-300">{item.month}</span>
-                  <span className="text-sm font-bold text-amber-400">${item.amount}</span>
-                </div>
-                <div className="w-full bg-stone-900 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-amber-700 to-amber-600 h-2 rounded-full transition-all"
-                    style={{ width: `${(item.amount / 380) * 100}%` }}
-                  ></div>
-                </div>
+          {timeline.map((item, idx) => (
+            <div key={idx} style={{ marginBottom: "8px" }}>
+              <div style={styles.row}>
+                <span>{item.month}</span>
+                <span style={styles.highlight}>${item.amount}</span>
               </div>
-            ))}
-          </div>
+              <div style={styles.barBackground}>
+                <div
+                  style={{
+                    ...styles.barFill,
+                    width: `${(item.amount / 380) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Team & Phases */}
-        <div className="col-span-1 bg-stone-800/80 rounded-lg p-5 border border-amber-900/40">
-          <div className="flex items-center gap-2 mb-4">
-            <Users className="w-6 h-6 text-amber-600" />
-            <h2 className="text-xl font-bold text-amber-200">Team</h2>
+        {/* Team Members */}
+        <div style={styles.card}>
+          <div style={styles.cardHeader}>
+            <Users size={20} color="#fbbf24" />
+            <h2 style={styles.sectionTitle}>Team</h2>
           </div>
-          <div className="grid grid-cols-2 gap-2 mb-4">
+          <div style={styles.teamGrid}>
             {teamMembers.map((member, idx) => (
-              <div key={idx} className="bg-stone-900 border border-amber-900/30 rounded px-3 py-1 text-sm text-center text-neutral-300">
+              <div key={idx} style={styles.memberBox}>
                 {member}
               </div>
             ))}
           </div>
-          <div className="text-sm text-amber-400 text-center font-semibold">
-            141 Total Work Days
-          </div>
+          <div style={styles.footerNote}>141 Total Work Days</div>
         </div>
 
         {/* Project Phases */}
-        <div className="col-span-3 bg-stone-800/80 rounded-lg p-5 border border-amber-900/40">
-          <div className="flex items-center gap-2 mb-4">
-            <Package className="w-6 h-6 text-amber-600" />
-            <h2 className="text-xl font-bold text-amber-200">Project Phases</h2>
-          </div>
-          <div className="space-y-3">
-            {phases.map((phase, idx) => (
-              <div key={idx}>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm font-medium text-neutral-300">{phase.name}</span>
-                  <span className="text-sm text-amber-400">{phase.days} days</span>
-                </div>
-                <div className="w-full bg-stone-900 rounded-full h-3">
-                  <div 
-                    className={`${phase.color} h-3 rounded-full transition-all`}
-                    style={{ width: `${(phase.days / 42) * 100}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer Note */}
-      <div className="mt-6 text-center text-sm text-neutral-400">
-        Materials-only budget | Zero labor costs (volunteer team)
-      </div>
-    </div>
-  );
-}
+        <div style={{ ...styles.card, gridColumn: "1 / 4" }}>
